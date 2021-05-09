@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+>
+<h:head/>
+<h:body>
+    <ui:composition template="../templates/layout.xhtml">
+        <ui:define name="css">
+            <h:outputStylesheet name="two-column-layout.css" library="css" />
+        </ui:define>
+        <ui:define name="content">
+            <div class="row">
+                <div class="column1">
+                    <p class="list-title">Musicians </p>
+                    <c:choose>
+                        <c:when test="#{musiciansMyBatis.allMusicians.size() > 0}" >
+                            <ol class="list">
+                                <ui:repeat value="#{musiciansMyBatis.allMusicians}" var="musician">
+                                    <li class="list-item"><h:link value="#{musician.stagename}" outcome="/musician-songs?musicianId=#{musician.id}" /></li>
+                                </ui:repeat>
+                            </ol>
+                        </c:when>
+                        <c:otherwise>
+                            <p>There are no musicians added yet</p>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+                <div class="column2">
+                    <h:form class="form">
+                        <label class="label"> Enter musician stage name:</label>
+                        <h:inputText value="#{musiciansMyBatis.musicianToCreate.stagename}" required="true" />
+                        <h:commandButton value="Add new musician" action="#{musiciansMyBatis.createMusician}" />
+                    </h:form>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head/>
+<h:body>
+    <ui:composition template="templates/layout.xhtml">
+        <ui:define name="css">
+            <h:outputStylesheet name="two-column-layout.css" library="css" />
+        </ui:define>
+
+        <ui:define name="content">
+            <div class="row">
+                <div class="column1">
+                    <p class="list-title">Songs </p>
+                    <c:choose>
+                        <c:when test="#{songs.allSongs.size() > 0}" >
+                            <ol class="list">
+                                <ui:repeat value="#{songs.allSongs}" var="song">
+                                    <li class="list-item"><h:link value="#{song.title}" outcome="song-details?songId=#{song.id}" /></li>
+                                </ui:repeat>
+                            </ol>
+                        </c:when>
+                        <c:otherwise>
+                            <p class="info-message">There are no songs added yet</p>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+
+                <div class="column2">
+                    <h:form class="form">
+                        <p class="info-message"><b>Note</b>: you can add song without singer, album or genres. You can add them later.</p>
+                        <label class="label">Enter song title:</label>
+                        <h:inputText value="#{songs.songToCreate.title}" required="true" />
+
+                        <label class="label">Select release date:</label>
+                        <p:calendar value="#{songs.songToCreate.releaseDate}" mode="popup" required="true"/>
+
+                        <label class="label">Choose musician:</label>
+                            <c:choose>
+                                <c:when test="#{musicians.allMusicians.size() > 0}" >
+                                    <h:selectOneMenu value="#{songs.songToCreate_musicianId}">
+                                        <f:selectItem itemLabel="#{'none'}" itemValue="#{0}"/>
+                                        <f:selectItems value="#{musicians.allMusicians}" var="musician"
+                                                       itemLabel="#{musician.stageName}" itemValue="#{musician.id}" />
+                                    </h:selectOneMenu>
+                                    <p class="info-message">Musician is not added yet? Go to <h:link value="musicians" outcome="musicians" />
+                                        page and add new musicians!</p>
+                                </c:when>
+                                <c:otherwise>
+                                    <p class="info-message">Go to <h:link value="musicians" outcome="musicians" />
+                                        page and add new musicians, because now there are no musicians available!</p>
+                                </c:otherwise>
+                            </c:choose>
+
+                        <label class="label">Choose album:</label>
+                            <c:choose>
+                                <c:when test="#{albums.allAlbums.size() > 0}" >
+                                    <h:selectOneMenu value="#{songs.songToCreate_albumId}">
+                                        <f:selectItem itemLabel="#{'none'}" itemValue="#{0}"/>
+                                        <f:selectItems value="#{albums.allAlbums}" var="album"
+                                                       itemLabel="#{album.title}" itemValue="#{album.id}" />
+                                    </h:selectOneMenu>
+                                    <p class="info-message">Album is not added yet? Go to <h:link value="albums" outcome="albums" />
+                                        page and add new albums!</p>
+                                </c:when>
+                                <c:otherwise>
+                                    <p class="info-message">Go to <h:link value="albums" outcome="albums" />
+                                        page and add new albums, because now there are no albums available!</p>
+                                </c:otherwise>
+                            </c:choose>
+
+                        <label class="label">Choose genres:</label>
+                            <c:choose>
+                                <c:when test="#{genres.allGenres.size() > 0}" >
+                                    <h:selectManyCheckbox value="#{songs.songToCreate_genresId}">
+                                        <f:selectItems value="#{genres.allGenres}" var="genre"
+                                                       itemValue="#{genre.id}" itemLabel="#{genre.name}"
+                                        />
+                                    </h:selectManyCheckbox>
+                                    <p class="info-message">Genre is not added yet? Go to <h:link value="genres" outcome="genres" />
+                                        page and add new genres!</p>
+                                </c:when>
+                                <c:otherwise>
+                                    <p class="info-message">Go to <h:link value="genres" outcome="genres" />
+                                        page and add new genres, because now there are no genres available!</p>
+                                </c:otherwise>
+                            </c:choose>
+
+                            <h:commandButton value="Add song" action="#{songs.createSong}" />
+                    </h:form>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

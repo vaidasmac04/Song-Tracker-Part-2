@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head/>
+<h:body>
+    <ui:composition template="templates/layout.xhtml">
+        <ui:define name="content">
+            <h:form class="form">
+                <h:outputText
+                        class="error"
+                        value="Song was already modified by another user. If you want to override it - try again"
+                        rendered="#{param['error'] == 'optimistic-lock-exception'}"
+                />
+                <label class="label">Change song title:</label>
+                <h:inputText value="#{singleSong.songToUpdate.title}" required="true" />
+
+                <label class="label">Change release date:</label>
+                <p:calendar value="#{singleSong.songToUpdate.releaseDate}" mode="popup" required="true"/>
+
+                <label class="label">Change musician:</label>
+
+                <c:choose>
+                    <c:when test="#{musicians.allMusicians.size() > 0}" >
+                        <h:selectOneMenu value="#{singleSong.songToUpdate_musicianId}">
+                            <f:selectItems value="#{musicians.allMusicians}" var="musician"
+                                           itemLabel="#{musician.stageName}" itemValue="#{musician.id}" />
+                            <f:selectItem itemLabel="#{'none'}" itemValue="#{0}" />
+                        </h:selectOneMenu>
+                        <p class="info-message">Musician is not added yet? Go to <h:link value="musicians" outcome="musicians" />
+                            page and add new musicians!</p>
+                    </c:when>
+                    <c:otherwise>
+                        <p class="info-message">Go to <h:link value="musicians" outcome="musicians" />
+                            page and add new musicians, because now there are no musicians available!</p>
+                    </c:otherwise>
+                </c:choose>
+
+                <label class="label">Choose album:</label>
+                <c:choose>
+                    <c:when test="#{albums.allAlbums.size() > 0}" >
+                        <h:selectOneMenu value="#{singleSong.songToUpdate_albumId}">
+                            <f:selectItems value="#{albums.allAlbums}" var="album"
+                                           itemLabel="#{album.title}" itemValue="#{album.id}" />
+                            <f:selectItem itemLabel="#{'none'}" itemValue="#{0}" />
+                        </h:selectOneMenu>
+                    </c:when>
+                    <c:otherwise>
+                        <p class="info-message">Go to <h:link value="albums" outcome="albums" />
+                            page and add new albums, because now there are no albums available!</p>
+                    </c:otherwise>
+                </c:choose>
+
+                <label class="label">Choose genres:</label>
+                <c:choose>
+                    <c:when test="#{genres.allGenres.size() > 0}" >
+                        <h:selectManyCheckbox value="#{singleSong.songToUpdate_genresId}">
+
+                            <f:selectItems value="#{genres.allGenres}" var="genre"
+                                           itemValue="#{genre.id}" itemLabel="#{genre.name}" checked="checked"
+
+                            />
+                        </h:selectManyCheckbox>
+                        <p class="info-message">Genre is not added yet? Go to <h:link value="genres" outcome="genres" />
+                            page and add new genres!</p>
+                    </c:when>
+                    <c:otherwise>
+                        <p class="info-message">Go to <h:link value="genres" outcome="genres" />
+                            page and add new genres, because now there are no genres available!</p>
+                    </c:otherwise>
+                </c:choose>
+
+                <h:commandButton value="Update song" action="#{singleSong.updateSong}">
+                    <f:param name="songId" value="#{singleSong.songToUpdate.id}" />
+                </h:commandButton>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

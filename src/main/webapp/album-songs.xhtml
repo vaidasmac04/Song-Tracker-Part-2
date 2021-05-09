@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+>
+
+<h:head/>
+<h:body>
+    <ui:composition template="templates/layout.xhtml">
+        <ui:define name="content">
+            <p class="list-title">Songs of <i>#{singleAlbum.album.title}</i></p>
+
+            <c:choose>
+                Songs:
+                <c:when test="#{singleAlbum.album.songs.size() > 0}" >
+                    <ol class="list">
+                        <ui:repeat value="#{singleAlbum.album.songs}" var="albumSong">
+                            <li class="list-item"><h:link value="#{albumSong.title}" outcome="song-details?songId=#{albumSong.id}" /></li>
+                        </ui:repeat>
+                    </ol>
+                </c:when>
+                <c:otherwise>
+                    <p>There are no songs added yet</p>
+                </c:otherwise>
+            </c:choose>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

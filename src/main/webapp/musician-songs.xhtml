@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head/>
+<h:body>
+    <ui:composition template="templates/layout.xhtml">
+        <ui:define name="content">
+            <p class="list-title"> Song of <i>#{singleMusician.musician.stageName}</i></p>
+
+            <c:choose>
+                Songs:
+                <c:when test="#{singleMusician.musician.songs.size() > 0}" >
+                    <ol class="list">
+                        <ui:repeat value="#{singleMusician.musician.songs}" var="musicianSong">
+                            <li class="list-item"><h:link value="#{musicianSong.title}" outcome="song-details?songId=#{musicianSong.id}" /></li>
+                        </ui:repeat>
+                    </ol>
+                </c:when>
+                <c:otherwise>
+                    <p>There are no songs added yet</p>
+                </c:otherwise>
+            </c:choose>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>
