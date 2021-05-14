@@ -17,12 +17,24 @@
         <ui:define name="content">
             <div class="row">
                 <div class="column1">
+                    <h:form class="bottom-margin-container ">
+                        <h:commandButton
+                                value="Show playlist running time"
+                                disabled="#{totalRunningTime.totalRunningTimeCalculationStatus}"
+                                action="#{totalRunningTime.calculateTotalRunningTime}">
+                        </h:commandButton>
+                        <h:outputText
+                                class="result-container"
+                                value="#{totalRunningTime.totalRunningTimeCalculationStatus}" />
+                    </h:form>
                     <p class="list-title">Songs </p>
                     <c:choose>
                         <c:when test="#{songs.allSongs.size() > 0}" >
                             <ol class="list">
                                 <ui:repeat value="#{songs.allSongs}" var="song">
-                                    <li class="list-item"><h:link value="#{song.title}" outcome="song-details?songId=#{song.id}" /></li>
+                                    <li class="list-item">
+                                        <h:link value="#{song.title}" outcome="song-details?songId=#{song.id}" />
+                                    </li>
                                 </ui:repeat>
                             </ol>
                         </c:when>

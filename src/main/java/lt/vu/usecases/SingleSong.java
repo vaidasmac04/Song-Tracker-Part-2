@@ -57,7 +57,6 @@ public class SingleSong implements Serializable {
         Integer songId = Integer.parseInt(requestParameters.get("songId"));
         songToUpdate = songsDAO.findOne(songId);
         prepareSong();
-        System.out.println("here (single song - init)");
         availableGenres = loadAvailableGenres();
     }
 
@@ -84,7 +83,6 @@ public class SingleSong implements Serializable {
 
     @Transactional
     public String updateSong(){
-        System.out.println("-------> version: " + songToUpdate.getVersion());
         try {
             Musician musician = musiciansDAO.findOne(songToUpdate_musicianId);
 

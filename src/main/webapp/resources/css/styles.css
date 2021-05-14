@@ -47,7 +47,7 @@
 }
 
 .input-wrapper form p {
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 input[type=text], select {
@@ -101,17 +101,17 @@ input[type=submit]:hover {
     font-size: 18px;
     font-weight: bold;
     text-align: center;
-    margin-top: 0px;
-    margin-bottom: 0px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .list {
     background: #f2f2f2;
     padding: 5px;
-    margin-top: 0px;
+    margin-top: 0;
     overflow-x:hidden;
     overflow-y:scroll;
-    height: 85vh;
+    height: 80vh;
 }
 
 .list-item {
@@ -128,3 +128,13 @@ input[type=submit]:hover {
     display: block;
 }
 
+.bottom-margin-container {
+    margin-bottom: 20px;
+}
+
+.result-container {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    display: block;
+}
