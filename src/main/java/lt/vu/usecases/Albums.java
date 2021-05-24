@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lt.vu.entities.Album;
 import lt.vu.entities.Musician;
+import lt.vu.interceptors.LoggedInvocation;
 import lt.vu.persistence.AlbumsDAO;
 import lt.vu.persistence.MusiciansDAO;
 
@@ -30,6 +31,7 @@ public class Albums {
         loadAllAlbums();
     }
 
+    @LoggedInvocation
     @Transactional
     public String createAlbum(){
         this.albumsDAO.persist(albumToCreate);

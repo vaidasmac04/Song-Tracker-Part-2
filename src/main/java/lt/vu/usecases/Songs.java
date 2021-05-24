@@ -5,6 +5,7 @@ import lombok.Setter;
 import lt.vu.entities.Album;
 import lt.vu.entities.Musician;
 import lt.vu.entities.Song;
+import lt.vu.interceptors.LoggedInvocation;
 import lt.vu.persistence.AlbumsDAO;
 import lt.vu.persistence.GenresDAO;
 import lt.vu.persistence.MusiciansDAO;
@@ -55,6 +56,7 @@ public class Songs {
         loadAllSongs();
     }
 
+    @LoggedInvocation
     @Transactional
     public String createSong(){
         Musician musician = musiciansDAO.findOne(songToCreate_musicianId);
