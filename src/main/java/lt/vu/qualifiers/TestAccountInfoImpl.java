@@ -5,7 +5,7 @@ import javax.enterprise.inject.Model;
 
 @Model
 @Alternative
-public class TestAccountInfoImpl implements AccountInfo {
+public class TestAccountInfoImpl implements IAccountInfo {
     @Override
     public String getInfo() {
         return "You are using test version of Song tracker. " +

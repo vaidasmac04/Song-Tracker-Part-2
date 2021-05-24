@@ -1,5 +1,5 @@
 package lt.vu.qualifiers;
 
-public interface AccountInfo {
+public interface IAccountInfo {
     String getInfo();
 }

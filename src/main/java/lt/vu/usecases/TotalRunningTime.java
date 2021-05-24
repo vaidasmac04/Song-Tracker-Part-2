@@ -1,5 +1,6 @@
 package lt.vu.usecases;
 
+import lt.vu.decorators.TotalRunningTimeResults;
 import lt.vu.persistence.SongsDAO;
 import lt.vu.services.TotalRunningTimeCalculator;
 
@@ -18,12 +19,17 @@ public class TotalRunningTime implements Serializable {
 
     @Inject
     private TotalRunningTimeCalculator totalRunningTimeCalculator;
-    private Future<Integer> totalRunningTimeCalculationTask = null;
+    private Future<TotalRunningTimeResults> totalRunningTimeCalculationTask = null;
 
     public String calculateTotalRunningTime() {
 
-        totalRunningTimeCalculationTask = totalRunningTimeCalculator
-                .calculateTotalRunningTime(songsDAO.loadAll().size());
+        try {
+            totalRunningTimeCalculationTask = totalRunningTimeCalculator
+                    .calculateTotalRunningTime(songsDAO.loadAll().size());
+        } catch (InterruptedException e) {
+            return  "/songs.xhtml?faces-redirect=true";
+        }
+
         return  "/songs.xhtml?faces-redirect=true";
     }
 
@@ -38,6 +44,8 @@ public class TotalRunningTime implements Serializable {
             return "Calculation is in progress";
         }
 
-        return "Your playlist running time is: " + totalRunningTimeCalculationTask.get() + " min(s)";
+        return "Your playlist running time is: " +
+                totalRunningTimeCalculationTask.get().getValue() + " " +
+                totalRunningTimeCalculationTask.get().getUnit();
     }
 }

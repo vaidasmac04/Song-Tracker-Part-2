@@ -9,6 +9,5 @@ import java.lang.annotation.Target;
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.TYPE})
-public @interface VipAccountInfo {
+public @interface ITestAccountInfo {
 }
-

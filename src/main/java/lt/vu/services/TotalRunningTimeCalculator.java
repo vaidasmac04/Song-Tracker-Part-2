@@ -1,5 +1,7 @@
 package lt.vu.services;
 
+import lt.vu.decorators.ITotalRunningTimeCalculator;
+import lt.vu.decorators.TotalRunningTimeResults;
 import lt.vu.entities.Song;
 import lt.vu.persistence.SongsDAO;
 import org.apache.deltaspike.core.api.future.Futureable;
@@ -12,18 +14,16 @@ import java.util.Random;
 import java.util.concurrent.Future;
 
 @ApplicationScoped
-public class TotalRunningTimeCalculator implements Serializable {
+public class TotalRunningTimeCalculator implements ITotalRunningTimeCalculator, Serializable {
 
     @Futureable
-    public Future<Integer> calculateTotalRunningTime(int count) {
+    public Future<TotalRunningTimeResults> calculateTotalRunningTime(int count) throws InterruptedException {
 
-        try {
-            Thread.sleep(3000); // Simulate intensive work
-        } catch (InterruptedException e) {
+        Thread.sleep(3000); // Simulate intensive work
 
-        }
-
-        final Integer totalRunningTime = 3 * count;
-        return new AsyncResult<>(totalRunningTime);
+        final TotalRunningTimeResults totalRunningTimeResults = new TotalRunningTimeResults();
+        totalRunningTimeResults.setValue(3 * count);
+        totalRunningTimeResults.setUnit("min");
+        return new AsyncResult<>(totalRunningTimeResults);
     }
 }

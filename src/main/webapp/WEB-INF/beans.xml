@@ -15,4 +15,8 @@
         <!--<class>lt.vu.qualifiers.TestAccountInfoImpl</class>-->
         <class>lt.vu.qualifiers.ReportTestAccountInfoImpl</class>
     </alternatives>
+
+    <decorators>
+        <!--<class>lt.vu.decorators.TotalRunningTimeCalculatorDecorator</class>-->
+    </decorators>
 </beans>
