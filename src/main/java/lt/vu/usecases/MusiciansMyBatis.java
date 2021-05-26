@@ -2,6 +2,7 @@ package lt.vu.usecases;
 
 import lombok.Getter;
 import lombok.Setter;
+import lt.vu.interceptors.LoggedInvocation;
 import lt.vu.mybatis.dao.MusicianMapper;
 import lt.vu.mybatis.model.Musician;
 
@@ -34,6 +35,7 @@ public class MusiciansMyBatis {
         this.allMusicians = musicianMapper.selectAll();
     }
 
+    @LoggedInvocation
     @Transactional
     public String createMusician() {
         musicianMapper.insert(musicianToCreate);

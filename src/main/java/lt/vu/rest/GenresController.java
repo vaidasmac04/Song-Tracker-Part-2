@@ -66,6 +66,10 @@ public class GenresController {
     public Response update(
             @PathParam("id") final Integer id,
             GenreDto genreDto) {
+        if (id != genreDto.getId()) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
         try {
             Genre existingGenre = genresDAO.findOne(id);
             if (existingGenre == null) {

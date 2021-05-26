@@ -3,6 +3,7 @@ package lt.vu.usecases;
 import lombok.Getter;
 import lombok.Setter;
 import lt.vu.entities.Musician;
+import lt.vu.interceptors.LoggedInvocation;
 import lt.vu.persistence.MusiciansDAO;
 
 import javax.annotation.PostConstruct;
@@ -30,6 +31,7 @@ public class Musicians {
         loadAllMusicians();
     }
 
+    @LoggedInvocation
     @Transactional
     public String createMusician(){
         this.musiciansDAO.persist(musicianToCreate);

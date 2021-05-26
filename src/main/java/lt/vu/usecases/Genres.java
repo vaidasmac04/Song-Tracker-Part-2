@@ -5,6 +5,7 @@ import lombok.Setter;
 import lt.vu.entities.Genre;
 import lt.vu.entities.Musician;
 import lt.vu.entities.Song;
+import lt.vu.interceptors.LoggedInvocation;
 import lt.vu.persistence.GenresDAO;
 import lt.vu.persistence.MusiciansDAO;
 import lt.vu.persistence.SongsDAO;
@@ -36,6 +37,7 @@ public class Genres {
         allGenres = genresDAO.loadAll();
     }
 
+    @LoggedInvocation
     @Transactional
     public String createGenre(){
         this.genresDAO.persist(genreToCreate);

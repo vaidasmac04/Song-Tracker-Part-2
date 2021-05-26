@@ -6,6 +6,7 @@ import lt.vu.entities.Album;
 import lt.vu.entities.Genre;
 import lt.vu.entities.Musician;
 import lt.vu.entities.Song;
+import lt.vu.interceptors.LoggedInvocation;
 import lt.vu.persistence.AlbumsDAO;
 import lt.vu.persistence.GenresDAO;
 import lt.vu.persistence.MusiciansDAO;
@@ -81,6 +82,7 @@ public class SingleSong implements Serializable {
         return genres;
     }
 
+    @LoggedInvocation
     @Transactional
     public String updateSong(){
         try {

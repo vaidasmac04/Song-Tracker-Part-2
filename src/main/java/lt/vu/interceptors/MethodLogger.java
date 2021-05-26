@@ -13,7 +13,7 @@ public class MethodLogger implements Serializable{
     @AroundInvoke
     public Object logMethodInvocation(InvocationContext context) throws Exception {
         Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy--MM-dd HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println("The method '" + context.getMethod().getName() + "' was called at " + formatter.format(date));
         return context.proceed();
     }
